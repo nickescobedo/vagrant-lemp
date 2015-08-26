@@ -62,32 +62,6 @@ server {
   location ~ /\.ht {
     deny all;
   }
-
-  ### phpMyAdmin ###
-  location /phpmyadmin {
-    root /usr/share/;
-    index index.php index.html index.htm;
-    location ~ ^/phpmyadmin/(.+\.php)$ {
-      client_max_body_size 4M;
-      client_body_buffer_size 128k;
-      try_files $uri =404;
-      root /usr/share/;
-
-      # Point it to the fpm socket;
-      fastcgi_pass unix:/var/run/php5-fpm.sock;
-      fastcgi_index index.php;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      include /etc/nginx/fastcgi_params;
-    }
-
-    location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt)) {
-      root /usr/share/;
-    }
-  }
-  location /phpMyAdmin {
-    rewrite ^/* /phpmyadmin last;
-  }
-  ### phpMyAdmin ###
 }
 EOF
 
@@ -95,8 +69,6 @@ sudo touch /usr/share/nginx/html/info.php
 sudo cat >> /usr/share/nginx/html/info.php <<'EOF'
 <?php phpinfo(); ?>
 EOF
-
-sudo aptitude install -q -y -f phpmyadmin
 
 sudo service nginx restart
 
