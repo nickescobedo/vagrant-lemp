@@ -20,7 +20,7 @@ sudo cat >> /etc/nginx/sites-available/default <<'EOF'
 server {
   listen   80;
 
-  root /usr/share/nginx/html;
+  root /var/www;
   index index.php index.html index.htm;
 
   # Make site accessible from http://localhost/
@@ -65,8 +65,8 @@ server {
 }
 EOF
 
-sudo touch /usr/share/nginx/html/info.php
-sudo cat >> /usr/share/nginx/html/info.php <<'EOF'
+sudo touch /var/www/info.php
+sudo cat >> /var/www/info.php <<'EOF'
 <?php phpinfo(); ?>
 EOF
 
